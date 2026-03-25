@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Compressor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎬 Video Compressor</h1>
+      <p class="subtitle">Convert, compress, and optimize your videos</p>
+    </header>
+
+    <main>
+      <!-- Upload Section -->
+      <section class="upload-section">
+        <div class="drop-zone" id="dropZone">
+          <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          <h2>Drag & drop your video here</h2>
+          <p>or click to browse</p>
+          <input type="file" id="fileInput" accept="video/*" hidden>
+          <div class="file-info" id="fileInfo" style="display: none;">
+            <span id="fileName"></span>
+            <span id="fileSize"></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Options Section -->
+      <section class="options-section" id="optionsSection" style="display: none;">
+        <div class="option-group">
+          <label for="formatSelect">Output Format:</label>
+          <select id="formatSelect">
+            <option value="mp4-h264">MP4 (H.264) - Best Compatibility</option>
+            <option value="mp4-h265" selected>MP4 (H.265) - Best Compression</option>
+            <option value="webm-vp9">WebM (VP9) - Web Optimized</option>
+            <option value="mkv-h265">MKV (H.265) - Container + Compression</option>
+          </select>
+        </div>
+
+        <div class="option-group">
+          <label>Quality Level:</label>
+          <div class="quality-buttons">
+            <input type="radio" id="qualityHQ" name="quality" value="hq">
+            <label for="qualityHQ" class="quality-label">
+              <span class="quality-name">High Quality</span>
+              <span class="quality-desc">Larger file, best quality</span>
+            </label>
+
+            <input type="radio" id="qualityBalanced" name="quality" value="balanced" checked>
+            <label for="qualityBalanced" class="quality-label active">
+              <span class="quality-name">Balanced</span>
+              <span class="quality-desc">Good quality, reasonable size</span>
+            </label>
+
+            <input type="radio" id="qualitySmall" name="quality" value="small">
+            <label for="qualitySmall" class="quality-label">
+              <span class="quality-name">Smallest Size</span>
+              <span class="quality-desc">Compressed, best compression</span>
+            </label>
+          </div>
+        </div>
+
+        <button id="convertBtn" class="convert-btn">
+          <span class="btn-text">Convert Video</span>
+        </button>
+      </section>
+
+      <!-- Progress Section -->
+      <section class="progress-section" id="progressSection" style="display: none;">
+        <div class="progress-container">
+          <div class="progress-header">
+            <h3>Converting...</h3>
+            <span id="progressPercent" class="progress-percent">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+          <div class="progress-stats">
+            <div class="stat">
+              <span class="stat-label">Speed:</span>
+              <span id="statFps" class="stat-value">0 fps</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Size:</span>
+              <span id="statSize" class="stat-value">0 MB</span>
+            </div>
+            <div class="stat">
+              <span class="stat-label">Time:</span>
+              <span id="statTime" class="stat-value">00:00:00</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Complete Section -->
+      <section class="complete-section" id="completeSection" style="display: none;">
+        <div class="success-message">
+          <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+          <h3>Conversion Complete! ✨</h3>
+        </div>
+
+        <div class="file-comparison">
+          <div class="comparison-item">
+            <span class="label">Original Size:</span>
+            <span id="originalSize" class="size">0 MB</span>
+          </div>
+          <div class="comparison-arrow">→</div>
+          <div class="comparison-item">
+            <span class="label">Compressed Size:</span>
+            <span id="compressedSize" class="size">0 MB</span>
+          </div>
+          <div class="comparison-item">
+            <span class="label">Saved:</span>
+            <span id="savedSize" class="size-saved">0 MB</span>
+          </div>
+        </div>
+
+        <button id="downloadBtn" class="download-btn">
+          <svg class="download-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Download Compressed Video
+        </button>
+
+        <button id="convertAgainBtn" class="secondary-btn">Convert Another Video</button>
+      </section>
+
+      <!-- Error Section -->
+      <section id="errorSection" class="error-section" style="display: none;">
+        <div class="error-message">
+          <svg class="error-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <h3>Conversion Failed</h3>
+          <p id="errorText"></p>
+        </div>
+        <button id="retryBtn" class="secondary-btn">Try Again</button>
+      </section>
+    </main>
+
+    <footer>
+      <p>Built with ❤️ | Powered by FFmpeg</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
