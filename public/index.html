@@ -37,8 +37,8 @@
         <div class="option-group">
           <label for="formatSelect">Output Format:</label>
           <select id="formatSelect">
-            <option value="mp4-h264">MP4 (H.264) - Best Compatibility</option>
-            <option value="mp4-h265" selected>MP4 (H.265) - Best Compression</option>
+            <option value="mp4-h264" selected>MP4 (H.264) - Best Compatibility</option>
+            <option value="mp4-h265">MP4 (H.265) - Best Compression</option>
             <option value="webm-vp9">WebM (VP9) - Web Optimized</option>
             <option value="mkv-h265">MKV (H.265) - Container + Compression</option>
           </select>
@@ -63,6 +63,12 @@
             <label for="qualitySmall" class="quality-label">
               <span class="quality-name">Smallest Size</span>
               <span class="quality-desc">Compressed, best compression</span>
+            </label>
+
+            <input type="radio" id="qualityMobile" name="quality" value="mobile">
+            <label for="qualityMobile" class="quality-label">
+              <span class="quality-name">Mobile</span>
+              <span class="quality-desc">Optimized for Android/iPhone playback</span>
             </label>
           </div>
         </div>
